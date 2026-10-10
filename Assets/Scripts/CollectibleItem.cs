@@ -1,35 +1,63 @@
+
 using UnityEngine;
 
-[RequireComponent(typeof(Collider))]
 public class CollectibleItem : MonoBehaviour
 {
-    public enum EffectType { AddTime, RemoveTime, AddScore, RemoveScore }
-    [SerializeField] EffectType effect = EffectType.AddScore;
-    [SerializeField] float timeAmount = 3f;
-    [SerializeField] int scoreAmount = 500;
-    [SerializeField] AudioClip collectSfx;
-    [SerializeField, Range(0f, 1f)] float sfxVolume = 1f;
-    [SerializeField] GameObject collectVfx;
-    bool collected;
+    [SerializeField] private ItemData itemData;
 
-    void Reset() { GetComponent<Collider>().isTrigger = true; }
+    private bool collected;
 
-    void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
-        if (collected || !other.CompareTag("Player")) return;
-        GameManager gm = GameManager.Instance;
-        if (gm == null || !gm.IsPlaying) return;
+        if (collected || !other.CompareTag("Player"))
+            return;
+
+        if (itemData == null)
+        {
+            Debug.LogError(
+                $"{name}: ItemData has not been assigned.",
+                this
+            );
+            return;
+        }
+
+        GameManager manager = GameManager.Instance;
+
+        if (manager == null)
+        {
+            Debug.LogError("GameManager.Instance is null.");
+            return;
+        }
+
         collected = true;
 
-        switch (effect)
+        switch (itemData.effect)
         {
-            case EffectType.AddTime: gm.AddTime(Mathf.Abs(timeAmount)); break;
-            case EffectType.RemoveTime: gm.AddTime(-Mathf.Abs(timeAmount)); break;
-            case EffectType.AddScore: gm.AddScore(Mathf.Abs(scoreAmount)); break;
-            case EffectType.RemoveScore: gm.AddScore(-Mathf.Abs(scoreAmount)); break;
+            case ItemEffect.AddTime:
+                manager.AddTime(itemData.amount);
+                break;
+
+            case ItemEffect.RemoveTime:
+                manager.AddTime(-itemData.amount);
+                break;
+
+            case ItemEffect.AddScore:
+                manager.AddScore(itemData.amount);
+                break;
+
+            case ItemEffect.RemoveScore:
+                manager.AddScore(-itemData.amount);
+                break;
         }
-        if (collectSfx != null) AudioSource.PlayClipAtPoint(collectSfx, transform.position, sfxVolume);
-        if (collectVfx != null) Instantiate(collectVfx, transform.position, Quaternion.identity);
+
+        if (itemData.collectSFX != null)
+        {
+            AudioSource.PlayClipAtPoint(
+                itemData.collectSFX,
+                transform.position
+            );
+        }
+
         Destroy(gameObject);
     }
 }
