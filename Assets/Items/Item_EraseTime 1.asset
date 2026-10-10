@@ -15,4 +15,4 @@ MonoBehaviour:
   itemName: TickDown
   effect: 1
   amount: 5
-  collectSFX: {fileID: 0}
+  collectSFX: {fileID: 8300000, guid: af3008d46869d3e489da8a4f16ad4a11, type: 3}

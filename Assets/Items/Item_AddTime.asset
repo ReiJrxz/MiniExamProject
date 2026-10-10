@@ -15,4 +15,4 @@ MonoBehaviour:
   itemName: ClockUp
   effect: 0
   amount: 3
-  collectSFX: {fileID: 0}
+  collectSFX: {fileID: 8300000, guid: f0bffc86491cc2f4cb50efff197d36d3, type: 3}

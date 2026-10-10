@@ -15,4 +15,4 @@ MonoBehaviour:
   itemName: DownScorer
   effect: 3
   amount: 500
-  collectSFX: {fileID: 0}
+  collectSFX: {fileID: 8300000, guid: 6ee57a2543288274990db81878ae42d5, type: 3}
