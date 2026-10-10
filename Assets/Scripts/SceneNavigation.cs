@@ -1,25 +1,27 @@
-
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneNavigation : MonoBehaviour
+namespace ZiddikJari
 {
-    [Header("Scene Settings")]
-    [SerializeField] private string mainMenuSceneName = "MainMenu";
-
-    // ปุ่ม Back to Main Menu
-    public void BackToMainMenu()
+public class SceneNavigation : MonoBehaviour
     {
-        Time.timeScale = 1f;
-        SceneManager.LoadScene(mainMenuSceneName);
-    }
+        [Header("Scene Settings")]
+        [SerializeField] private string mainMenuSceneName = "MainMenu";
 
-    // ปุ่ม Retry
-    public void Retry()
-    {
-        Time.timeScale = 1f;
-        SceneManager.LoadScene(
-            SceneManager.GetActiveScene().buildIndex
-        );
+        // ปุ่ม Back to Main Menu
+        public void BackToMainMenu()
+        {
+            Time.timeScale = 1f;
+            SceneManager.LoadScene(mainMenuSceneName);
+        }
+
+        // ปุ่ม Retry
+        public void Retry()
+        {
+            Time.timeScale = 1f;
+            SceneManager.LoadScene(
+                SceneManager.GetActiveScene().buildIndex
+            );
+        }
     }
 }

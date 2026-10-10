@@ -1,96 +1,139 @@
 
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 
-public class HUDController : MonoBehaviour
+namespace ZiddikJari
 {
-    [Header("Assign TMP labels or legacy UI Text")]
-    [SerializeField] TMP_Text timerTMP;
-    [SerializeField] TMP_Text scoreTMP;
-    [SerializeField] TMP_Text victoryScoreTMP;
-    [SerializeField] TMP_Text gameOverScoreTMP;
-
-    [SerializeField] Text timerLegacy;
-    [SerializeField] Text scoreLegacy;
-
-    [Header("Panels")]
-    [SerializeField] GameObject victoryPanel;
-    [SerializeField] GameObject gameOverPanel;
-
-    GameManager subscribedManager;
-
-    void Start()
+    public class HUDController : MonoBehaviour
     {
-        ConnectToGameManager();
-    }
+        [Header("Timer")]
+        [SerializeField] private TMP_Text timerTMP;
 
-    void OnDestroy()
-    {
-        DisconnectFromGameManager();
-    }
+        [SerializeField] private Color normalTimerColor = Color.white;
+        [SerializeField] private Color warningTimerColor = new Color(1f, 0.55f, 0f);
+        [SerializeField] private Color criticalTimerColor = Color.red;
 
-    void ConnectToGameManager()
-    {
-        if (subscribedManager != null) return;
+        [SerializeField] private float warningThreshold = 15f;
+        [SerializeField] private float criticalThreshold = 5f;
 
-        if (GameManager.Instance == null)
+        [Header("Score")]
+        [SerializeField] private TMP_Text scoreTMP;
+        [SerializeField] private TMP_Text victoryScoreTMP;
+        [SerializeField] private TMP_Text gameOverScoreTMP;
+
+        [Header("Panels")]
+        [SerializeField] private GameObject victoryPanel;
+        [SerializeField] private GameObject gameOverPanel;
+
+        private GameManager subscribedManager;
+
+        private void Start()
         {
-            Debug.LogError(
-                "HUDController: GameManager.Instance is null. " +
-                "Check that GameManager exists in the scene."
-            );
-            return;
+            ConnectToGameManager();
         }
 
-        subscribedManager = GameManager.Instance;
+        private void OnDestroy()
+        {
+            DisconnectFromGameManager();
+        }
 
-        subscribedManager.TimeChanged += UpdateTimer;
-        subscribedManager.ScoreChanged += UpdateScore;
-        subscribedManager.StateChanged += UpdateState;
+        private void ConnectToGameManager()
+        {
+            if (subscribedManager != null)
+                return;
 
-        UpdateTimer(subscribedManager.TimeRemaining);
-        UpdateScore(subscribedManager.Score);
-        UpdateState(subscribedManager.State);
+            if (GameManager.Instance == null)
+            {
+                Debug.LogError(
+                    "HUDController: GameManager.Instance is null. " +
+                    "Check that GameManager exists in the scene.",
+                    this
+                );
+                return;
+            }
 
-        Debug.Log("HUDController connected to GameManager.");
-    }
+            subscribedManager = GameManager.Instance;
 
-    void DisconnectFromGameManager()
-    {
-        if (subscribedManager == null) return;
+            subscribedManager.TimeChanged += UpdateTimer;
+            subscribedManager.ScoreChanged += UpdateScore;
+            subscribedManager.StateChanged += UpdateState;
 
-        subscribedManager.TimeChanged -= UpdateTimer;
-        subscribedManager.ScoreChanged -= UpdateScore;
-        subscribedManager.StateChanged -= UpdateState;
+            UpdateTimer(subscribedManager.TimeRemaining);
+            UpdateScore(subscribedManager.Score);
+            UpdateState(subscribedManager.State);
 
-        subscribedManager = null;
-    }
+            Debug.Log("HUDController connected to GameManager.", this);
+        }
 
-    void UpdateTimer(float seconds)
-    {
-        string value = "Time: " + Mathf.CeilToInt(seconds);
+        private void DisconnectFromGameManager()
+        {
+            if (subscribedManager == null)
+                return;
 
-        if (timerTMP != null) timerTMP.text = value;
-        if (timerLegacy != null) timerLegacy.text = value;
-    }
+            subscribedManager.TimeChanged -= UpdateTimer;
+            subscribedManager.ScoreChanged -= UpdateScore;
+            subscribedManager.StateChanged -= UpdateState;
 
-    void UpdateScore(int score)
-    {
-        string value = "Score: " + score.ToString("N0");
+            subscribedManager = null;
+        }
 
-        if (scoreTMP != null) scoreTMP.text = value;
-        if (scoreLegacy != null) scoreLegacy.text = value;
-        if (victoryScoreTMP != null) victoryScoreTMP.text = value;
-        if (gameOverScoreTMP != null) gameOverScoreTMP.text = value;
-    }
+        private void UpdateTimer(float seconds)
+        {
+            if (timerTMP == null)
+                return;
 
-    void UpdateState(GameManager.GameState state)
-    {
-        if (victoryPanel != null)
-            victoryPanel.SetActive(state == GameManager.GameState.Victory);
+            seconds = Mathf.Max(0f, seconds);
 
-        if (gameOverPanel != null)
-            gameOverPanel.SetActive(state == GameManager.GameState.GameOver);
+            // แสดงวินาทีและเศษวินาที 2 หลัก เช่น 09.45
+            int wholeSeconds = Mathf.FloorToInt(seconds);
+            int centiseconds = Mathf.FloorToInt(
+                (seconds - wholeSeconds) * 100f
+            );
+
+            timerTMP.text = $"{wholeSeconds:00}.{centiseconds:00}";
+
+            // 5 วินาทีหรือน้อยกว่า: สีแดง
+            if (seconds <= criticalThreshold)
+            {
+                timerTMP.color = criticalTimerColor;
+            }
+            // 15 วินาทีหรือน้อยกว่า: สีส้ม
+            else if (seconds <= warningThreshold)
+            {
+                timerTMP.color = warningTimerColor;
+            }
+            // เวลาปกติ
+            else
+            {
+                timerTMP.color = normalTimerColor;
+            }
+        }
+
+        private void UpdateScore(int score)
+        {
+            string value = "Score: " + score.ToString("N0");
+
+            if (scoreTMP != null)
+                scoreTMP.text = value;
+
+            if (victoryScoreTMP != null)
+                victoryScoreTMP.text = value;
+
+            if (gameOverScoreTMP != null)
+                gameOverScoreTMP.text = value;
+        }
+
+        private void UpdateState(GameManager.GameState state)
+        {
+            if (victoryPanel != null)
+                victoryPanel.SetActive(
+                    state == GameManager.GameState.Victory
+                );
+
+            if (gameOverPanel != null)
+                gameOverPanel.SetActive(
+                    state == GameManager.GameState.GameOver
+                );
+        }
     }
 }

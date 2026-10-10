@@ -1,63 +1,65 @@
-
 using UnityEngine;
 
-public class CollectibleItem : MonoBehaviour
+namespace ZiddikJari
 {
-    [SerializeField] private ItemData itemData;
-
-    private bool collected;
-
-    private void OnTriggerEnter(Collider other)
+public class CollectibleItem : MonoBehaviour
     {
-        if (collected || !other.CompareTag("Player"))
-            return;
+        [SerializeField] private ItemData itemData;
 
-        if (itemData == null)
+        private bool collected;
+
+        private void OnTriggerEnter(Collider other)
         {
-            Debug.LogError(
-                $"{name}: ItemData has not been assigned.",
-                this
-            );
-            return;
+            if (collected || !other.CompareTag("Player"))
+                return;
+
+            if (itemData == null)
+            {
+                Debug.LogError(
+                    $"{name}: ItemData has not been assigned.",
+                    this
+                );
+                return;
+            }
+
+            GameManager manager = GameManager.Instance;
+
+            if (manager == null)
+            {
+                Debug.LogError("GameManager.Instance is null.");
+                return;
+            }
+
+            collected = true;
+
+            switch (itemData.effect)
+            {
+                case ItemEffect.AddTime:
+                    manager.AddTime(itemData.amount);
+                    break;
+
+                case ItemEffect.RemoveTime:
+                    manager.AddTime(-itemData.amount);
+                    break;
+
+                case ItemEffect.AddScore:
+                    manager.AddScore(itemData.amount);
+                    break;
+
+                case ItemEffect.RemoveScore:
+                    manager.AddScore(-itemData.amount);
+                    break;
+            }
+
+            if (itemData.collectSFX != null)
+            {
+                AudioSource.PlayClipAtPoint(
+                    itemData.collectSFX,
+                    transform.position
+                );
+            }
+
+            Destroy(gameObject);
         }
-
-        GameManager manager = GameManager.Instance;
-
-        if (manager == null)
-        {
-            Debug.LogError("GameManager.Instance is null.");
-            return;
-        }
-
-        collected = true;
-
-        switch (itemData.effect)
-        {
-            case ItemEffect.AddTime:
-                manager.AddTime(itemData.amount);
-                break;
-
-            case ItemEffect.RemoveTime:
-                manager.AddTime(-itemData.amount);
-                break;
-
-            case ItemEffect.AddScore:
-                manager.AddScore(itemData.amount);
-                break;
-
-            case ItemEffect.RemoveScore:
-                manager.AddScore(-itemData.amount);
-                break;
-        }
-
-        if (itemData.collectSFX != null)
-        {
-            AudioSource.PlayClipAtPoint(
-                itemData.collectSFX,
-                transform.position
-            );
-        }
-
-        Destroy(gameObject);
     }
 }
