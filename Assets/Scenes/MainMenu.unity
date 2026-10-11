@@ -4492,7 +4492,7 @@ MonoBehaviour:
   audioMixer: {fileID: 24100000, guid: 3652a63028390654bac441b7b0512d68, type: 2}
   masterVolumeParameter: MasterVolume
   musicVolumeParameter: BGMVolume
-  sfxMasterVolumeParameter: SfxMasterVolume
+  sfxMasterVolumeParameter: SFXMasterVolume
   sfxVolumeParameter: SFXVolume
   uiVolumeParameter: UIVolume
   sfxSource: {fileID: 1836305399}
