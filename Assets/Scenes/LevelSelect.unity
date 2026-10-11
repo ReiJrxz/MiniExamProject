@@ -1321,7 +1321,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1562617552}
         m_TargetAssemblyTypeName: ZiddikJari.MainMenuUIManager, Assembly-CSharp
-        m_MethodName: ShowMain
+        m_MethodName: BackToMainMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
