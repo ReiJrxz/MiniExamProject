@@ -39,6 +39,7 @@ namespace ZiddikJari
         [SerializeField] private AudioSource uiSource;
         [SerializeField] private AudioClip victorySfx;
         [SerializeField] private AudioClip loseSfx;
+        [SerializeField] private AudioClip jumpSfx;
 
         private const string MusicPrefsKey = "MusicVolume";
         private const string SfxPrefsKey = "SfxVolume";
@@ -134,6 +135,11 @@ namespace ZiddikJari
             PlaySfx(loseSfx);
         }
 
+        public void PlayJumpSfx()
+        {
+            PlaySfx(jumpSfx);
+        }
+
         public void PlayUISfx(AudioClip clip)
         {
             if (clip == null)
@@ -184,7 +190,7 @@ namespace ZiddikJari
         {
             SetMixerVolume(uiVolumeParameter, "UIVolume", value);
         }
-
+        
         private void SetMixerVolume(string parameter, string prefsKey, float value)
         {
             value = Mathf.Clamp01(value);
@@ -211,6 +217,18 @@ namespace ZiddikJari
 
             PlayerPrefs.SetFloat(prefsKey, value);
             PlayerPrefs.Save();
+        }
+
+        public void ShowCursor()
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+
+        public void LockCursor()
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
         }
     }
 }

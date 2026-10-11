@@ -4492,13 +4492,14 @@ MonoBehaviour:
   audioMixer: {fileID: 24100000, guid: 3652a63028390654bac441b7b0512d68, type: 2}
   masterVolumeParameter: MasterVolume
   musicVolumeParameter: BGMVolume
-  sfxMasterVolumeParameter: SFXMasterVolume
+  sfxMasterVolumeParameter: MasterSFXVolume
   sfxVolumeParameter: SFXVolume
   uiVolumeParameter: UIVolume
   sfxSource: {fileID: 1836305399}
   uiSource: {fileID: 1836305399}
   victorySfx: {fileID: 8300000, guid: fd9baedac34507c49a6e78e8b081c573, type: 3}
   loseSfx: {fileID: 8300000, guid: a2326f3f7c9f2044b8fcbd24e2f9f198, type: 3}
+  jumpSfx: {fileID: 0}
 --- !u!4 &1836305401
 Transform:
   m_ObjectHideFlags: 0

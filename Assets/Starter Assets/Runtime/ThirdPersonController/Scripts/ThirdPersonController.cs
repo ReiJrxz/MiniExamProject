@@ -32,6 +32,10 @@ namespace StarterAssets
         public AudioClip[] FootstepAudioClips;
         [Range(0, 1)] public float FootstepAudioVolume = 0.5f;
 
+        [Header("Jump Sound")]
+        [SerializeField] private AudioSource jumpAudioSource;
+        [SerializeField] private AudioClip jumpAudioClip;
+
         [Space(10)]
         [Tooltip("The height the player can jump")]
         public float JumpHeight = 1.2f;
@@ -302,13 +306,16 @@ namespace StarterAssets
                 // Jump
                 if (_input.jump && _jumpTimeoutDelta <= 0.0f)
                 {
-                    // the square root of H * -2 * G = how much velocity needed to reach desired height
                     _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
 
-                    // update animator if using character
                     if (_hasAnimator)
                     {
                         _animator.SetBool(_animIDJump, true);
+                    }
+
+                    if (jumpAudioSource != null && jumpAudioClip != null)
+                    {
+                        jumpAudioSource.PlayOneShot(jumpAudioClip);
                     }
                 }
 
