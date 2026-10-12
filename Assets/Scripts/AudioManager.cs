@@ -41,6 +41,7 @@ namespace ZiddikJari
         [SerializeField] private AudioClip loseSfx;
         [SerializeField] private AudioClip jumpSfx;
         [SerializeField] private AudioClip obstacleHitSfx;
+        [SerializeField] private AudioClip itemPickupSfx;
 
         private const string MusicPrefsKey = "MusicVolume";
         private const string SfxPrefsKey = "SfxVolume";
@@ -144,7 +145,22 @@ namespace ZiddikJari
         {
             PlaySfx(obstacleHitSfx);
         }
+        public void PlayItemPickupSfx(AudioClip clip)
+        {
+            if (clip == null)
+            {
+                Debug.LogWarning("Pickup SFX is not assigned.");
+                return;
+            }
 
+            if (sfxSource == null)
+            {
+                Debug.LogError("SFX Source is not assigned.");
+                return;
+            }
+
+            sfxSource.PlayOneShot(clip);
+        }
         public void PlayUISfx(AudioClip clip)
         {
             if (clip == null)
