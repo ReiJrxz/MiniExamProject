@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 3138970}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -15302,7 +15302,7 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: 563143784}
+  m_Mesh: {fileID: 1584193262}
 --- !u!33 &105938784
 MeshFilter:
   m_ObjectHideFlags: 10
@@ -16388,6 +16388,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4416926081852918481, guid: 64dce48905ffd9b4293e595fa6941544, type: 3}
       insertIndex: -1
       addedObject: {fileID: 127295194}
+    - targetCorrespondingSourceObject: {fileID: 4416926081852918481, guid: 64dce48905ffd9b4293e595fa6941544, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 127295196}
   m_SourcePrefab: {fileID: 100100000, guid: 64dce48905ffd9b4293e595fa6941544, type: 3}
 --- !u!1 &127295192 stripped
 GameObject:
@@ -16501,6 +16504,20 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3893294197879345259, guid: 64dce48905ffd9b4293e595fa6941544, type: 3}
   m_PrefabInstance: {fileID: 127295191}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &127295196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 127295192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a8d58c30ac488f48973050d878b72e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ZiddikJari.ObstacleCollisionSfx
+  obstacleTag: Obstacle
+  soundCooldown: 0.4
 --- !u!1001 &132608248
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -55056,7 +55073,7 @@ GameObject:
   - component: {fileID: 402915844}
   m_Layer: 0
   m_Name: Cube (2)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -55082,7 +55099,7 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: 1596392059}
+  m_Mesh: {fileID: 1721826745}
 --- !u!33 &402915845
 MeshFilter:
   m_ObjectHideFlags: 10
@@ -72678,7 +72695,7 @@ GameObject:
   - component: {fileID: 948169873}
   m_Layer: 0
   m_Name: Cube (1)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -130499,7 +130516,7 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: 1549905157}
+  m_Mesh: {fileID: 563143784}
 --- !u!33 &1506706415
 MeshFilter:
   m_ObjectHideFlags: 10
@@ -160409,7 +160426,7 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: 1056127074}
+  m_Mesh: {fileID: 1113033563}
 --- !u!33 &1873525017
 MeshFilter:
   m_ObjectHideFlags: 10
@@ -175495,7 +175512,7 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: 1113033563}
+  m_Mesh: {fileID: 1549905157}
 --- !u!33 &2062856519
 MeshFilter:
   m_ObjectHideFlags: 10

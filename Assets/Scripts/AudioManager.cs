@@ -40,6 +40,7 @@ namespace ZiddikJari
         [SerializeField] private AudioClip victorySfx;
         [SerializeField] private AudioClip loseSfx;
         [SerializeField] private AudioClip jumpSfx;
+        [SerializeField] private AudioClip obstacleHitSfx;
 
         private const string MusicPrefsKey = "MusicVolume";
         private const string SfxPrefsKey = "SfxVolume";
@@ -138,6 +139,10 @@ namespace ZiddikJari
         public void PlayJumpSfx()
         {
             PlaySfx(jumpSfx);
+        }
+        public void PlayObstacleHitSfx()
+        {
+            PlaySfx(obstacleHitSfx);
         }
 
         public void PlayUISfx(AudioClip clip)

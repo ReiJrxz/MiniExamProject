@@ -4499,7 +4499,8 @@ MonoBehaviour:
   uiSource: {fileID: 1836305399}
   victorySfx: {fileID: 8300000, guid: fd9baedac34507c49a6e78e8b081c573, type: 3}
   loseSfx: {fileID: 8300000, guid: a2326f3f7c9f2044b8fcbd24e2f9f198, type: 3}
-  jumpSfx: {fileID: 0}
+  jumpSfx: {fileID: 8300000, guid: c04c2c0cc09d3514ea9572d31c76a28d, type: 3}
+  obstacleHitSfx: {fileID: 8300000, guid: c4fd33eca15edd444bc3996b54b42f1a, type: 3}
 --- !u!4 &1836305401
 Transform:
   m_ObjectHideFlags: 0

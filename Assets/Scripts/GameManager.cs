@@ -34,8 +34,11 @@ namespace ZiddikJari
 
             Instance = this;
             Time.timeScale = 1f;
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
             TimeRemaining = startingTime;
             Score = startingScore;
+
         }
 
         void Start()
@@ -96,9 +99,13 @@ namespace ZiddikJari
 
             State = result;
 
-            // ให้ผู้เล่นใช้เมาส์กดปุ่มบน Victory / Game Over panel ได้
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
+
+            if (result == GameState.Victory)
+                AudioManager.Instance?.PlayVictorySfx();
+            else
+                AudioManager.Instance?.PlayLoseSfx();
 
             StateChanged?.Invoke(State);
 
