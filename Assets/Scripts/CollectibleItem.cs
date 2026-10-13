@@ -53,10 +53,7 @@ public class CollectibleItem : MonoBehaviour
 
             if (itemData.collectSFX != null)
             {
-                AudioSource.PlayClipAtPoint(
-                    itemData.collectSFX,
-                    transform.position
-                );
+                AudioManager.Instance?.PlayItemPickupSfx(itemData.collectSFX);
             }
 
             Destroy(gameObject);
